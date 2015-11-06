@@ -120,6 +120,31 @@ public class Formula {
 		}
 	}
 	
+	public String renderAsString()
+	{
+		String tmp = "";
+		tmp+="(";
+		if(isAtomic())
+			tmp+=atom;
+		else
+		{
+			if(subformulas.length==1)
+			{
+				if(!connective.contains("!"))
+					tmp+=connective+subformulas[0].renderAsString();
+				else
+					tmp+="!"+subformulas[0].renderAsString();
+			}
+			else
+			{
+				tmp+=subformulas[0].renderAsString()+connective+subformulas[1].renderAsString();
+			}
+		}tmp+=")";
+		
+		return tmp;
+			
+	}
+	
 	public void printForm()
 	{
 		System.out.print("(");
