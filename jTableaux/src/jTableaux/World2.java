@@ -83,6 +83,9 @@ public class World2 {
 						related_worlds.get(k).addFormula(t);
 				}
 				break;
+			case "|":
+				Formula g3 = new Formula(f.getLeftFormula());
+				
 				
 			}
 		}
@@ -92,6 +95,16 @@ public class World2 {
 		}
 	}
 	
+	
+	public World2(World2 w)
+	{
+		name = w.getName();
+	}
+	
+	public String getName()
+	{
+		return name;
+	}
 	
 	public void sort()
 	{
@@ -145,6 +158,8 @@ public class World2 {
 		formulas.add(f);
 	}
 	
+	
+	public ArrayList<World> branches = new ArrayList<World>();
 	
 	private String name;
 	public ArrayList<Formula> formulas = new ArrayList<Formula>();
