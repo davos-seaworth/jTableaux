@@ -188,6 +188,10 @@ public class Formula {
 			}		
 			return tmp;
 		}
+		if(connective.contains("!!"))
+		{
+			return "!!";
+		}	
 		return connective;
 	}
 	

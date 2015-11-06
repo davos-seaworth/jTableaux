@@ -52,7 +52,7 @@ public class Main {
 		System.out.println();
 		w.executeRules();**/
 		
-		World w = new World();
+/**		World w = new World();
 	//	w.addPremise(new Formula("([](p))->([](q))"));    //"(a)&([](b))"
 	//	w.addConclusion(new Formula("[]((p)->(q))"));     //"[](b)"
 		
@@ -69,7 +69,7 @@ public class Main {
 		w.contradictionSweep();
 		w.printAll();
 		System.out.println(w.fullIsValid());
-		
+		**/
 		//w.printFormulas();
 		
 		
@@ -79,6 +79,36 @@ public class Main {
 //		System.out.println(w.formulas.get(2).getLeftFormula().getMainConnective()+" WHY");
 	//	w.executeRules();
 	//	w.printFormulas();
+		
+		
+		World2 w = new World2("w");
+		w.addPremise(new Formula("!(!(a'))"));
+		w.addPremise(new Formula("!(!((b)&(c)))"));
+		w.addPremise(new Formula("!((d)|(e))"));
+		w.addPremise(new Formula("(f)&(g)"));
+		w.addPremise(new Formula("!((h)->(i))"));
+		w.addPremise(new Formula("!([](a))"));
+		w.addPremise(new Formula("[](b)"));
+		w.addPremise(new Formula("<>((c)&(f))"));
+		w.addPremise(new Formula("!(<>(d))"));
+		w.printBranch();
+		w.sort();
+		w.printBranch();
+		w.doRules();
+		w.printBranch();
+		
+		/**
+		World2 v = new World2("w");
+		v.addPremise(new Formula("([](p))->([](q))"));
+		v.addConclusion(new Formula("[]((p)->(q))"));
+		System.out.println("Now printing1:");
+		v.printBranch();
+		v.sort();
+		System.out.println("Now printing2:");
+		v.printBranch();
+		v.doRules();
+		System.out.println("Now printing3:");
+		v.printBranch();**/
 	
 	}
 }
