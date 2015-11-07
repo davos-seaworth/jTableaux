@@ -82,7 +82,7 @@ public class Main {
 		
 		
 		World2 w = new World2("w");
-		w.addPremise(new Formula("!(!(a'))"));
+	/**	w.addPremise(new Formula("!(!(a'))"));
 		w.addPremise(new Formula("!(!((b)&(c)))"));
 		w.addPremise(new Formula("!((d)|(e))"));
 		w.addPremise(new Formula("(f)&(g)"));
@@ -90,10 +90,12 @@ public class Main {
 		w.addPremise(new Formula("!([](a))"));
 		w.addPremise(new Formula("[](b)"));
 		w.addPremise(new Formula("<>((c)&(f))"));
-		w.addPremise(new Formula("!(<>(d))"));
-		w.printBranch();
+		w.addPremise(new Formula("!(<>(d))"));**/
+		w.addPremise(new Formula("([](p))->([](q))"));
+		w.addConclusion(new Formula("[]((p)->(q))"));
+	//	w.printBranch();
 		w.sort();
-		w.printBranch();
+	//	w.printBranch();
 		w.doRules();
 		w.printBranch();
 		
