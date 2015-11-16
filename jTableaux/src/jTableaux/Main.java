@@ -91,26 +91,39 @@ public class Main {
 		w.addPremise(new Formula("[](b)"));
 		w.addPremise(new Formula("<>((c)&(f))"));
 		w.addPremise(new Formula("!(<>(d))"));**/
-		w.addPremise(new Formula("([](p))->([](q))"));
-		w.addConclusion(new Formula("[]((p)->(q))"));
-	//	w.printBranch();
+		
+	//	w.addPremise(new Formula("([](p))->([](q))"));
+	//	w.addConclusion(new Formula("[]((p)->(q))"));
+		
+//		w.addPremise(new Formula("[](p)"));
+//		w.addPremise(new Formula("[](q)"));
+//		w.addPremise(new Formula("!([](p))"));
+	//	w.addPremise(new Formula("(!([](p)))|(!([](q)))"));
+		
+		w.printBranch();
 		w.sort();
 	//	w.printBranch();
 		w.doRules();
 		w.printBranch();
+		w.validate();
 		
-		/**
+		
 		World2 v = new World2("w");
-		v.addPremise(new Formula("([](p))->([](q))"));
-		v.addConclusion(new Formula("[]((p)->(q))"));
-		System.out.println("Now printing1:");
-		v.printBranch();
+		//v.addPremise(new Formula("([](p))->([](q))"));
+		//v.addConclusion(new Formula("[]((p)->(q))"));
+		
+		v.addPremise(new Formula("([](p))->(!([](q)))"));
+		v.addPremise(new Formula("([](p))&([](q))"));
+		
+	//	System.out.println("Now printing1:");
+	//	v.printBranch();
 		v.sort();
-		System.out.println("Now printing2:");
-		v.printBranch();
+	//	System.out.println("Now printing2:");
+	//	v.printBranch();
 		v.doRules();
 		System.out.println("Now printing3:");
-		v.printBranch();**/
+		v.printBranch();
+		System.out.println(v.validate());
 	
 	}
 }

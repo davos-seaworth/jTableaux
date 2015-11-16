@@ -13,7 +13,7 @@ public class World2 {
 	public void doRules()
 	{
 		for(int i=0;i<formulas.size();i++)
-		{
+		{sort();
 			Formula f = formulas.get(i);
 			//System.out.println(f.getMainConnective()+"========");
 			if(!f.hasBeenused()){
@@ -63,7 +63,7 @@ public class World2 {
 				v.addFormula(new Formula(f.getLeftFormula().getLeftFormula(),"!"));
 				related_worlds.add(v);
 				break;
-			case "[]":f.toggleUsed();
+			case "[]"://f.toggleUsed();
 				for(int k=0;k<related_worlds.size();k++)
 				{//related_worlds.get(k).addFormula(
 					Formula t = new Formula(f.getLeftFormula());
@@ -108,6 +108,86 @@ public class World2 {
 		}
 		for(int i=0;i<branches.size();i++)
 			branches.get(i).doRules();
+		contradictionsweep();
+	}
+	
+	public void contradictionsweep()
+	{
+		for (int i=0;i<formulas.size();i++)
+		{
+			for (int k=formulas.size()-1;k>=formulas.size()/2;k--)//this might need to go back to a normal 0 to size loop
+			{
+				if(k!=i)
+				{
+					String s1 = formulas.get(i).renderAsString();
+					String s2 = formulas.get(k).renderAsString();
+					if(s1.equals("(!"+s2+")")||s2.equals("(!"+s1+")"))
+					{
+						formulas.add(new Formula("bottom"));
+						break;
+					}
+				}
+				
+			}
+		}
+		//for(int i=0;i<related_worlds.size();i++)
+	//	{
+	//		related_worlds.get(i).contradictionsweep();
+		//}
+	}
+	
+	/**
+	 * this works?! I think?
+	 * if so that's a victory todo: extensions of k and countermodel(halp)
+	 */
+	public boolean validate()
+	{
+		boolean temp = false;
+		if(branches.size()==0)
+		{
+			for(int i=0;i<formulas.size();i++)
+			{
+				if(formulas.get(i).renderAsString().contains("bottom"))
+				{
+					System.out.println("Valid in K");
+					return true;
+				}
+			}
+			for (int i=0;i<related_worlds.size();i++)
+			{
+				if(related_worlds.get(i).validate()==true)
+				{
+					System.out.println("Valid in K");
+					return true;
+				}
+			}
+			System.out.println("Invalid in K");
+			return false;
+		}
+		else
+		{
+			boolean found = false;
+			for(int i=0;i<formulas.size();i++)
+			{
+				if(formulas.get(i).renderAsString().contains("bottom"))
+					found = true;
+			}
+			if(!found)
+			{
+				for(int k=0;k<related_worlds.size();k++)
+				{
+					if(related_worlds.get(k).validate()==false)
+						return false;
+				}
+			}
+			for(int i=0;i<branches.size();i++)
+			{
+				if(branches.get(i).validate()==false)
+					return false;
+			}
+			return true;
+			
+		}
 	}
 	
 	
@@ -161,10 +241,20 @@ public class World2 {
 	
 	public void sort()
 	{
-		for (int i=0;i<formulas.size();i++)
+		int l = formulas.size();
+		for (int i=0;i<l;i++)
 		{
-			if(!formulas.get(i).getMainConnective().equals("![]")&&!formulas.get(i).getMainConnective().equals("<>"))
+		/**	if(!formulas.get(i).getMainConnective().equals("![]")&&!formulas.get(i).getMainConnective().equals("<>"))
+			{
 				formulas.add(formulas.remove(i));
+
+			}**/
+			if(formulas.get(i).renderAsString().length()>=4&&(formulas.get(i).renderAsString().substring(1, 3).equals("[]"))||(formulas.get(i).renderAsString().length()>=6&&formulas.get(i).renderAsString().substring(1, 5).equals("!(<>")))
+			{
+				formulas.add(formulas.remove(i));
+				i--;
+				l--;
+			}
 		}
 	}
 
