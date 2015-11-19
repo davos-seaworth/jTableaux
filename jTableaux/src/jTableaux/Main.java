@@ -124,6 +124,8 @@ public class Main {
 		System.out.println("Now printing3:");
 		v.printBranch();
 		System.out.println(v.validate());
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		v.counterModel();
 	
 	}
 }

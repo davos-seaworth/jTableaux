@@ -191,6 +191,48 @@ public class World2 {
 	}
 	
 	
+	public void counterModel()
+	{
+		markPath();
+		if(!hasBottom())
+		{
+			for(int i=0;i<branches.size();i++)
+			{
+				branches.get(i).markPath();
+				if(branches.get(i).hasBottom())
+				{
+					branches.get(i).printBranchAtomic();
+				}
+			}
+		}
+		else
+		{
+			printBranchAtomic();
+		}
+	}
+	
+	public void markPath()
+	{
+		for(int i=0;i<related_worlds.size();i++)
+		{
+			related_worlds.get(i).markPath();
+			if(related_worlds.get(i).hasBottom())
+				formulas.add(new Formula("bottom"));
+		}
+	}
+	
+	public boolean hasBottom()
+	{
+		for(int i=0;i<formulas.size();i++)
+		{
+			if(formulas.get(i).renderAsString().contains("bottom"))
+				return true;
+		}
+		return false;
+	}
+	
+	
+	
 	public World2(World2 w)
 	{
 		name = w.getName();
@@ -288,6 +330,26 @@ public class World2 {
 		{
 			System.out.println("**This world branches from: "+name);
 			branches.get(i).printBranch();
+		}
+	}
+	
+	public void printBranchAtomic()
+	{
+		System.out.println("--Formulas in world: "+name+"--");
+		for (int i=0;i<formulas.size();i++)
+		{
+			if(formulas.get(i).isAtomic()&&hasBottom()&&!formulas.get(i).renderAsString().contains("bottom"))
+				System.out.println(formulas.get(i).renderAsString());
+		}
+		for(int i=0;i<related_worlds.size();i++)
+		{
+			System.out.println("**This world is related to: "+name+"**");
+			related_worlds.get(i).printBranchAtomic();
+		}
+		for(int i=0;i<branches.size();i++)
+		{
+			System.out.println("**This world branches from: "+name);
+			branches.get(i).printBranchAtomic();
 		}
 	}
 	
