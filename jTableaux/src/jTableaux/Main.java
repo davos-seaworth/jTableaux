@@ -113,7 +113,7 @@ public class Main {
 		//v.addConclusion(new Formula("[]((p)->(q))"));
 		
 		v.addPremise(new Formula("([](p))->(!([](q)))"));
-		v.addPremise(new Formula("([](p))&([](q))"));
+		v.addConclusion(new Formula("!(([](p))&([](q)))"));
 		
 	//	System.out.println("Now printing1:");
 	//	v.printBranch();

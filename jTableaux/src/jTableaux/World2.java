@@ -12,8 +12,13 @@ public class World2 {
 	
 	public void doRules()
 	{
+		visited = true;
 		for(int i=0;i<formulas.size();i++)
-		{sort();
+		{
+			sort();
+
+		//	contradictionsweep();
+			
 			Formula f = formulas.get(i);
 			//System.out.println(f.getMainConnective()+"========");
 			if(!f.hasBeenused()){
@@ -67,8 +72,18 @@ public class World2 {
 				for(int k=0;k<related_worlds.size();k++)
 				{//related_worlds.get(k).addFormula(
 					Formula t = new Formula(f.getLeftFormula());
+					
+					related_worlds.get(k).contradictionsweep(); //so box things don't get added when they shouldn't be
+					if(related_worlds.get(k).alreadyHere(new Formula("bottom")))	
+						break;
+					
 					if(!related_worlds.get(k).alreadyHere(t))
 						related_worlds.get(k).addFormula(t);
+					
+					
+					
+					if(related_worlds.get(k).hasBeenVisited())
+						related_worlds.get(k).toggleVisit();
 				}
 				break;
 			case "<>":f.toggleUsed();
@@ -80,6 +95,11 @@ public class World2 {
 				for(int k=0;k<related_worlds.size();k++)
 				{//related_worlds.get(k).addFormula(
 					Formula t = new Formula(f.getLeftFormula().getLeftFormula(),"!");
+					
+					related_worlds.get(k).contradictionsweep(); //so box things don't get added when they shouldn't be
+					if(related_worlds.get(k).alreadyHere(new Formula("bottom")))	
+						break;
+					
 					if(!related_worlds.get(k).alreadyHere(t))
 						related_worlds.get(k).addFormula(t);
 				}
@@ -111,6 +131,11 @@ public class World2 {
 		contradictionsweep();
 	}
 	
+	public void toggleVisit()
+	{
+		visited = !visited;
+	}
+	
 	public void contradictionsweep()
 	{
 		for (int i=0;i<formulas.size();i++)
@@ -121,7 +146,7 @@ public class World2 {
 				{
 					String s1 = formulas.get(i).renderAsString();
 					String s2 = formulas.get(k).renderAsString();
-					if(s1.equals("(!"+s2+")")||s2.equals("(!"+s1+")"))
+					if((s1.equals("(!"+s2+")")&&formulas.get(k).isAtomic()) || (s2.equals("(!"+s1+")"))&&formulas.get(i).isAtomic())
 					{
 						formulas.add(new Formula("bottom"));
 						break;
@@ -311,7 +336,10 @@ public class World2 {
 		return false;
 	}
 	
-	
+	public boolean hasBeenVisited()
+	{
+		return visited;
+	}
 	
 	
 	public void printBranch()
@@ -338,8 +366,16 @@ public class World2 {
 		System.out.println("--Formulas in world: "+name+"--");
 		for (int i=0;i<formulas.size();i++)
 		{
-			if(formulas.get(i).isAtomic()&&hasBottom()&&!formulas.get(i).renderAsString().contains("bottom"))
-				System.out.println(formulas.get(i).renderAsString());
+			if( (formulas.get(i).isAtomic()&&hasBottom()&&!formulas.get(i).renderAsString().contains("bottom"))||(formulas.get(i).getMainConnective().equals("!")&&formulas.get(i).getLeftFormula().isAtomic()) )
+			{
+				//System.out.println(formulas.get(i).renderAsString());
+				cntrmdl.add(formulas.get(i));
+			}
+		}
+		removeDupes();
+		for(int i=0;i<cntrmdl.size();i++)
+		{
+			System.out.println(cntrmdl.get(i).renderAsString());
 		}
 		for(int i=0;i<related_worlds.size();i++)
 		{
@@ -352,6 +388,14 @@ public class World2 {
 			branches.get(i).printBranchAtomic();
 		}
 	}
+	
+	public void removeDupes()
+	{
+		if(cntrmdl.size()>0)
+			cntrmdl.remove(cntrmdl.size()-1);
+	}
+	
+	public ArrayList<Formula> cntrmdl = new ArrayList<Formula>();
 	
 	public void addPremise(Formula f)
 	{
@@ -372,6 +416,7 @@ public class World2 {
 	public ArrayList<World2> branches = new ArrayList<World2>();
 	
 	private String name;
+	private boolean visited = false;
 	public ArrayList<Formula> formulas = new ArrayList<Formula>();
 	public ArrayList<World2> related_worlds = new ArrayList<World2>();
 
