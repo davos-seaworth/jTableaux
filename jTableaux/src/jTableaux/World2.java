@@ -93,6 +93,11 @@ public class World2 {
 				{
 					formulas.add(t);
 				}
+				else if(LazyClassForLazyPeople.getExtension().equals("serial"))
+				{
+					related_worlds.add(new World2(name+" serial world"));
+					related_worlds.get(related_worlds.size()-1).addFormula(t);
+				}
 				break;
 			case "<>":f.toggleUsed();
 				World2 v2 = new World2(name+"R"+name+"_v | created by: " + f.renderAsString());
@@ -114,6 +119,15 @@ public class World2 {
 					
 					if(!related_worlds.get(k).alreadyHere(t1))
 						related_worlds.get(k).addFormula(t1);
+				}
+				if(LazyClassForLazyPeople.getExtension().equals("reflexive"))
+				{
+					formulas.add(t1);
+				}
+				else if(LazyClassForLazyPeople.getExtension().equals("serial"))
+				{
+					related_worlds.add(new World2(name+" serial world"));
+					related_worlds.get(related_worlds.size()-1).addFormula(t1);
 				}
 				break;
 			case "|":f.toggleUsed();
