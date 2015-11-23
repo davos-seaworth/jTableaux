@@ -112,8 +112,14 @@ public class Main {
 		//v.addPremise(new Formula("([](p))->([](q))"));
 		//v.addConclusion(new Formula("[]((p)->(q))"));
 		
-		v.addPremise(new Formula("([](p))->(!([](q)))"));
-		v.addConclusion(new Formula("!(([](p))&([](q)))"));
+		LazyClassForLazyPeople.setExtenstion("reflexive");
+		
+	//	v.addPremise(new Formula("([](p))->(!([](q)))"));
+	//	v.addConclusion(new Formula("!(([](p))&([](q)))"));
+		
+		v.addPremise(new Formula("[](a)"));
+		v.addConclusion(new Formula("a"));
+		
 		
 	//	System.out.println("Now printing1:");
 	//	v.printBranch();

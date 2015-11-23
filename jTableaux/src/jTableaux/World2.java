@@ -68,10 +68,14 @@ public class World2 {
 				v.addFormula(new Formula(f.getLeftFormula().getLeftFormula(),"!"));
 				related_worlds.add(v);
 				break;
-			case "[]"://f.toggleUsed();
+			case "[]":
+				f.toggleUsed();
+				
+				Formula t = new Formula(f.getLeftFormula());
+				
 				for(int k=0;k<related_worlds.size();k++)
 				{//related_worlds.get(k).addFormula(
-					Formula t = new Formula(f.getLeftFormula());
+					
 					
 					related_worlds.get(k).contradictionsweep(); //so box things don't get added when they shouldn't be
 					if(related_worlds.get(k).alreadyHere(new Formula("bottom")))	
@@ -85,23 +89,31 @@ public class World2 {
 					if(related_worlds.get(k).hasBeenVisited())
 						related_worlds.get(k).toggleVisit();
 				}
+				if(LazyClassForLazyPeople.getExtension().equals("reflexive"))
+				{
+					formulas.add(t);
+				}
 				break;
 			case "<>":f.toggleUsed();
 				World2 v2 = new World2(name+"R"+name+"_v | created by: " + f.renderAsString());
 				v2.addFormula(new Formula(f.getLeftFormula()));
 				related_worlds.add(v2);
 				break;
-			case "!<>":f.toggleUsed();
+			case "!<>":
+				f.toggleUsed();
+				
+				Formula t1 = new Formula(f.getLeftFormula().getLeftFormula(),"!");
+			
 				for(int k=0;k<related_worlds.size();k++)
 				{//related_worlds.get(k).addFormula(
-					Formula t = new Formula(f.getLeftFormula().getLeftFormula(),"!");
+					
 					
 					related_worlds.get(k).contradictionsweep(); //so box things don't get added when they shouldn't be
 					if(related_worlds.get(k).alreadyHere(new Formula("bottom")))	
 						break;
 					
-					if(!related_worlds.get(k).alreadyHere(t))
-						related_worlds.get(k).addFormula(t);
+					if(!related_worlds.get(k).alreadyHere(t1))
+						related_worlds.get(k).addFormula(t1);
 				}
 				break;
 			case "|":f.toggleUsed();
@@ -318,9 +330,12 @@ public class World2 {
 			}**/
 			if(formulas.get(i).renderAsString().length()>=4&&(formulas.get(i).renderAsString().substring(1, 3).equals("[]"))||(formulas.get(i).renderAsString().length()>=6&&formulas.get(i).renderAsString().substring(1, 5).equals("!(<>")))
 			{
-				formulas.add(formulas.remove(i));
-				i--;
-				l--;
+				if(!formulas.get(i).hasBeenused())
+				{
+					formulas.add(formulas.remove(i));
+					i--;
+					l--;
+				}
 			}
 		}
 	}
@@ -351,12 +366,12 @@ public class World2 {
 		}
 		for(int i=0;i<related_worlds.size();i++)
 		{
-			System.out.println("**This world is related to: "+name+"**");
+			System.out.println("**This world( v ) is related to: "+name+"**");
 			related_worlds.get(i).printBranch();
 		}
 		for(int i=0;i<branches.size();i++)
 		{
-			System.out.println("**This world branches from: "+name);
+			System.out.println("**This world( v ) branches from: "+name);
 			branches.get(i).printBranch();
 		}
 	}
@@ -379,12 +394,12 @@ public class World2 {
 		}
 		for(int i=0;i<related_worlds.size();i++)
 		{
-			System.out.println("**This world is related to: "+name+"**");
+			System.out.println("**This world( v ) is related to: "+name+"**");
 			related_worlds.get(i).printBranchAtomic();
 		}
 		for(int i=0;i<branches.size();i++)
 		{
-			System.out.println("**This world branches from: "+name);
+			System.out.println("**This world( v ) branches from: "+name);
 			branches.get(i).printBranchAtomic();
 		}
 	}
