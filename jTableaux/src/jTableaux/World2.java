@@ -82,9 +82,14 @@ public class World2 {
 						break;
 					
 					if(!related_worlds.get(k).alreadyHere(t))
+					{
 						related_worlds.get(k).addFormula(t);
-					
-					
+					System.out.println("askjdhaskjdhaksd");
+						if(LazyClassForLazyPeople.getExtension().equals("symmetric")&&(t.getMainConnective().contains("[]")||t.getMainConnective().contains("!<>")))
+						{
+							formulas.add(t.getLeftFormula());
+						}
+					}
 					
 					if(related_worlds.get(k).hasBeenVisited())
 						related_worlds.get(k).toggleVisit();
@@ -97,6 +102,10 @@ public class World2 {
 				{
 					related_worlds.add(new World2(name+" serial world"));
 					related_worlds.get(related_worlds.size()-1).addFormula(t);
+				}
+				else if(LazyClassForLazyPeople.getExtension().equals("symmetric"))
+				{
+					
 				}
 				break;
 			case "<>":f.toggleUsed();

@@ -114,14 +114,16 @@ public class Main {
 		
 		//LazyClassForLazyPeople.setExtenstion("reflexive");
 	    //LazyClassForLazyPeople.setExtenstion("normal");
-		LazyClassForLazyPeople.setExtenstion("serial");
+		//LazyClassForLazyPeople.setExtenstion("serial");
+		LazyClassForLazyPeople.setExtenstion("symmetric");
 		
 		
 	//	v.addPremise(new Formula("([](p))->(!([](q)))"));
 	//	v.addConclusion(new Formula("!(([](p))&([](q)))"));
 		
-		v.addPremise(new Formula("[](a)"));
-		v.addConclusion(new Formula("!([](!(a)))"));
+		v.addPremise(new Formula("[]([](a))"));
+		v.addPremise(new Formula("!([](b))"));
+		v.addConclusion(new Formula("!([]([](!(a))))"));
 		
 		
 	//	System.out.println("Now printing1:");
