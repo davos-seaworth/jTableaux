@@ -89,6 +89,11 @@ public class World2 {
 						{
 							formulas.add(t.getLeftFormula());
 						}
+						if(LazyClassForLazyPeople.getExtension().equals("transitive"))
+						{
+							
+							related_worlds.get(k).addFormula(new Formula(f));
+						}
 					}
 					
 					if(related_worlds.get(k).hasBeenVisited())
