@@ -122,7 +122,7 @@ public class Main {
 	//	v.addPremise(new Formula("([](p))->(!([](q)))"));
 	//	v.addConclusion(new Formula("!(([](p))&([](q)))"));
 		
-		v.addPremise(new Formula("[](a)"));
+		v.addPremise(new Formula("!(<>(a))"));
 		v.addPremise(new Formula("!([]([](b)))"));
 	//	v.addConclusion(new Formula("!([]([](!(a))))"));
 		

@@ -108,10 +108,6 @@ public class World2 {
 					related_worlds.add(new World2(name+" serial world"));
 					related_worlds.get(related_worlds.size()-1).addFormula(t);
 				}
-				else if(LazyClassForLazyPeople.getExtension().equals("symmetric"))
-				{
-					
-				}
 				break;
 			case "<>":f.toggleUsed();
 				World2 v2 = new World2(name+"R"+name+"_v | created by: " + f.renderAsString());
@@ -130,6 +126,25 @@ public class World2 {
 					related_worlds.get(k).contradictionsweep(); //so box things don't get added when they shouldn't be
 					if(related_worlds.get(k).alreadyHere(new Formula("bottom")))	
 						break;
+					
+					if(!related_worlds.get(k).alreadyHere(t1))
+					{
+						related_worlds.get(k).addFormula(t1);
+					System.out.println("askjdhaskjdhaksd");
+						if(LazyClassForLazyPeople.getExtension().equals("symmetric")&&(t1.getMainConnective().contains("[]")||t1.getMainConnective().contains("!<>")))
+						{
+							formulas.add(t1.getLeftFormula());
+						}
+						if(LazyClassForLazyPeople.getExtension().equals("transitive"))
+						{
+							
+							related_worlds.get(k).addFormula(new Formula(f));
+						}
+					}
+					
+					if(related_worlds.get(k).hasBeenVisited())
+						related_worlds.get(k).toggleVisit();
+					
 					
 					if(!related_worlds.get(k).alreadyHere(t1))
 						related_worlds.get(k).addFormula(t1);
