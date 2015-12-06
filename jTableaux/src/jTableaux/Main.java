@@ -1,5 +1,9 @@
 package jTableaux;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Scanner;
+
 public class Main {
 	public static void main(String[] args)
 	{
@@ -113,8 +117,8 @@ public class Main {
 		//v.addConclusion(new Formula("[]((p)->(q))"));
 		
 		//LazyClassForLazyPeople.setExtenstion("reflexive");
-	    //LazyClassForLazyPeople.setExtenstion("normal");
-		LazyClassForLazyPeople.setExtenstion("serial");
+	    //LazyClassForLazyPeople.setExtenstion("K");
+		//LazyClassForLazyPeople.setExtenstion("serial");
 		//LazyClassForLazyPeople.setExtenstion("symmetric");
 		//LazyClassForLazyPeople.setExtenstion("transitive");
 		
@@ -127,12 +131,37 @@ public class Main {
 		
 	//	v.addConclusion(new Formula("!([]([](!(a))))"));
 		
-		v.addPremise(new Formula("[](p)"));
-		v.addConclusion(new Formula("<>(p)"));
+		//v.addPremise(new Formula("[](p)"));
+		//v.addConclusion(new Formula("<>(p)"));
 		
 		
 	//	System.out.println("Now printing1:");
 	//	v.printBranch();
+
+		
+		//String file = args[0];
+		try {
+			Scanner in = new Scanner(new FileReader(args[0]));//"C:\\Users\\Andrew\\jtab\\git\\jTableaux\\src\\jTableaux\\test.txt"));
+			String s = in.nextLine();
+			
+			LazyClassForLazyPeople.setExtenstion(s);
+			String temp;
+			while(in.hasNextLine())
+			{
+				temp = in.nextLine();
+				if(!in.hasNextLine())
+				{
+					v.addConclusion(new Formula(temp));
+					break;
+				}
+				v.addPremise(new Formula(temp));
+				
+			}
+			
+		} catch (FileNotFoundException e) {
+		}
+		
+		
 		v.sort();
 	//	System.out.println("Now printing2:");
 	//	v.printBranch();

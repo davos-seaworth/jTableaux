@@ -237,7 +237,7 @@ public class World2 {
 			{
 				if(formulas.get(i).renderAsString().contains("bottom"))
 				{
-					System.out.println("Valid in K");
+					System.out.println("Valid in "+LazyClassForLazyPeople.getExtension());
 					return true;
 				}
 			}
