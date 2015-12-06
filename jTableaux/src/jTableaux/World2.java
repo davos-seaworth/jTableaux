@@ -67,6 +67,10 @@ public class World2 {
 				World2 v = new World2(name+"R"+name+"_v | created by: " + f.renderAsString());
 				v.addFormula(new Formula(f.getLeftFormula().getLeftFormula(),"!"));
 				related_worlds.add(v);
+				if(LazyClassForLazyPeople.getExtension().equals("symmetric"))
+				{
+					formulas.add(new Formula(f.getLeftFormula().getLeftFormula()));
+				}
 				break;
 			case "[]":
 				f.toggleUsed();
@@ -113,6 +117,10 @@ public class World2 {
 				World2 v2 = new World2(name+"R"+name+"_v | created by: " + f.renderAsString());
 				v2.addFormula(new Formula(f.getLeftFormula()));
 				related_worlds.add(v2);
+				if(LazyClassForLazyPeople.getExtension().equals("symmetric"))
+				{
+					formulas.add(new Formula(f.getLeftFormula().getLeftFormula()));
+				}
 				break;
 			case "!<>":
 				f.toggleUsed();
